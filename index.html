@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolakoShop | Premium Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons para Iconos Modernos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="global-loader" class="loader-container">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navegación -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="app.navigateTo('home')">
+                <h1>Polako<span>Shop</span></h1>
+            </div>
+            
+            <div class="search-bar">
+                <i class='bx bx-search'></i>
+                <input type="text" id="global-search" placeholder="Buscar productos, categorías...">
+            </div>
+
+            <nav class="nav-links">
+                <a href="#" onclick="app.navigateTo('home')" class="nav-item active"><i class='bx bx-home-alt'></i> <span>Inicio</span></a>
+                <a href="#" onclick="app.navigateTo('catalog')" class="nav-item"><i class='bx bx-store'></i> <span>Catálogo</span></a>
+                <a href="#" onclick="app.navigateTo('favorites')" class="nav-item user-only"><i class='bx bx-heart'></i> <span>Favoritos</span></a>
+                <a href="#" onclick="app.navigateTo('cart')" class="nav-item"><i class='bx bx-shopping-bag'></i> <span id="cart-count" class="badge">0</span></a>
+                
+                <!-- Menú Usuario -->
+                <div class="dropdown user-dropdown">
+                    <button class="dropbtn"><i class='bx bx-user'></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="app.navigateTo('login')" class="guest-only">Iniciar Sesión</a>
+                        <a href="#" onclick="app.navigateTo('register')" class="guest-only">Registrarse</a>
+                        <a href="#" onclick="app.navigateTo('profile')" class="user-only">Mi Perfil</a>
+                        <a href="#" onclick="app.navigateTo('orders')" class="user-only">Mis Pedidos</a>
+                        <a href="#" onclick="app.navigateTo('settings')" class="user-only">Configuración</a>
+                        <a href="#" onclick="app.navigateTo('admin')" id="nav-admin" class="admin-only" style="display:none;">Corona Admin</a>
+                        <a href="#" onclick="app.logout()" class="user-only text-red">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn"><i class='bx bx-menu'></i></button>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal (Vistas Dinámicas) -->
+    <main id="main-content">
+
+        <!-- VISTA: INICIO -->
+        <section id="view-home" class="view active fade-in">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h2>Nueva Colección <br>Minimalist 2026</h2>
+                    <p>Diseño premium, comodidad absoluta. Descubre lo último en moda internacional.</p>
+                    <button class="btn btn-primary" onclick="app.navigateTo('catalog')">Explorar Catálogo</button>
+                </div>
+            </div>
+            <div class="section-container">
+                <div class="section-header">
+                    <h3>Nuevos Ingresos</h3>
+                    <a href="#" onclick="app.navigateTo('catalog')">Ver todo <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+                <div class="product-grid" id="home-new-products">
+                    <!-- Productos dinámicos -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: CATÁLOGO -->
+        <section id="view-catalog" class="view fade-in">
+            <div class="catalog-layout">
+                <aside class="catalog-filters">
+                    <h3>Filtros</h3>
+                    <div class="filter-group">
+                        <label>Categoría</label>
+                        <select id="filter-category">
+                            <option value="all">Todas</option>
+                            <option value="Polos">Polos</option>
+                            <option value="Camisetas">Camisetas</option>
+                            <option value="Chompas">Chompas</option>
+                            <option value="Casacas">Casacas</option>
+                            <option value="Poleras">Poleras</option>
+                            <option value="Pantalones">Pantalones</option>
+                            <option value="Jeans">Jeans</option>
+                            <option value="Joggers">Joggers</option>
+                            <option value="Shorts">Shorts</option>
+                            <option value="Ropa deportiva">Ropa deportiva</option>
+                            <option value="Medias">Medias</option>
+                            <option value="Calzoncillos">Calzoncillos</option>
+                            <option value="Boxers">Boxers</option>
+                            <option value="Zapatos">Zapatos</option>
+                            <option value="Zapatillas">Zapatillas</option>
+                            <option value="Sandalias">Sandalias</option>
+                            <option value="Gorras">Gorras</option>
+                            <option value="Mochilas">Mochilas</option>
+                            <option value="Accesorios">Accesorios</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Ordenar por</label>
+                        <select id="sort-products">
+                            <option value="newest">Más nuevo</option>
+                            <option value="price-asc">Más barato</option>
+                            <option value="price-desc">Más caro</option>
+                        </select>
+                    </div>
+                </aside>
+                <div class="catalog-content">
+                    <div class="product-grid" id="catalog-grid">
+                        <!-- Productos dinámicos -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: CARRITO -->
+        <section id="view-cart" class="view fade-in">
+            <div class="section-container wrapper-cart">
+                <h2>Tu Carrito</h2>
+                <div class="cart-layout">
+                    <div class="cart-items" id="cart-items-container">
+                        <!-- Items del carrito -->
+                    </div>
+                    <div class="cart-summary">
+                        <h3>Resumen del Pedido</h3>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>IGV (18%)</span>
+                            <span id="cart-igv">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="cart-total">$0.00</span>
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="app.processCheckout()">Proceder a la Compra</button>
+                        <button class="btn btn-outline w-100 mt-1" onclick="app.clearCart()">Vaciar Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: FAVORITOS -->
+        <section id="view-favorites" class="view fade-in">
+            <div class="section-container">
+                <h2>Mis Favoritos</h2>
+                <div class="product-grid" id="favorites-grid">
+                    <!-- Favoritos dinámicos -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: PEDIDOS -->
+        <section id="view-orders" class="view fade-in">
+            <div class="section-container">
+                <h2>Historial de Pedidos</h2>
+                <div class="orders-list" id="orders-container">
+                    <!-- Pedidos dinámicos -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: PERFIL -->
+        <section id="view-profile" class="view fade-in">
+            <div class="section-container profile-layout">
+                <div class="profile-card">
+                    <img src="https://ui-avatars.com/api/?name=User&background=000&color=fff" id="profile-img" alt="Perfil">
+                    <h3 id="profile-name-display">Usuario</h3>
+                    <p id="profile-email-display">usuario@correo.com</p>
+                    <p class="text-muted text-sm">Miembro desde: <span id="profile-date">...</span></p>
+                </div>
+                <div class="profile-details">
+                    <h3>Actualizar Datos</h3>
+                    <form id="profile-form">
+                        <div class="input-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="profile-name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>URL Foto de Perfil</label>
+                            <input type="url" id="profile-photo-url">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: CONFIGURACIÓN -->
+        <section id="view-settings" class="view fade-in">
+            <div class="section-container">
+                <h2>Configuración</h2>
+                <div class="settings-card">
+                    <div class="setting-item">
+                        <div>
+                            <h4>Notificaciones por correo</h4>
+                            <p>Recibir alertas de ofertas y nuevos ingresos.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h4>Modo Oscuro Estricto</h4>
+                            <p>Forzar fondo negro en toda la app.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" onchange="document.body.classList.toggle('dark-mode-strict')">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: LOGIN -->
+        <section id="view-login" class="view fade-in auth-view">
+            <div class="auth-card">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    <p class="auth-link">¿No tienes cuenta? <a href="#" onclick="app.navigateTo('register')">Regístrate</a></p>
+                    <p class="auth-link"><a href="#" onclick="app.resetPassword()">¿Olvidaste tu contraseña?</a></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- VISTA: REGISTRO -->
+        <section id="view-register" class="view fade-in auth-view">
+            <div class="auth-card">
+                <h2>Crear Cuenta</h2>
+                <form id="register-form">
+                    <div class="input-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="reg-name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="reg-password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                    <p class="auth-link">¿Ya tienes cuenta? <a href="#" onclick="app.navigateTo('login')">Inicia sesión</a></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- VISTA: ADMINISTRADOR (ALMACÉN) -->
+        <section id="view-admin" class="view fade-in">
+            <div class="admin-layout">
+                <div class="admin-sidebar">
+                    <h3>Panel Admin</h3>
+                    <ul>
+                        <li onclick="app.adminShowTab('dashboard')" class="active" id="tab-dashboard"><i class='bx bx-bar-chart-alt-2'></i> Dashboard</li>
+                        <li onclick="app.adminShowTab('products')" id="tab-products"><i class='bx bx-box'></i> Almacén (Productos)</li>
+                    </ul>
+                </div>
+                <div class="admin-content">
+                    
+                    <!-- Admin Tab: Dashboard -->
+                    <div id="admin-tab-dashboard" class="admin-tab active">
+                        <h2>Estadísticas Generales</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>Usuarios</h4>
+                                <h2 id="stat-users">0</h2>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Productos</h4>
+                                <h2 id="stat-products">0</h2>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Pedidos</h4>
+                                <h2 id="stat-orders">0</h2>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Ventas Totales</h4>
+                                <h2 id="stat-sales">$0.00</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Tab: Almacén (Products) -->
+                    <div id="admin-tab-products" class="admin-tab" style="display:none;">
+                        <div class="admin-header-flex">
+                            <h2>Almacén - Catálogo</h2>
+                            <button class="btn btn-primary" onclick="app.openProductModal()"><i class='bx bx-plus'></i> Nuevo Producto</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Imagen</th>
+                                        <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Stock</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-product-list">
+                                    <!-- Dinámico -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>PolakoShop</h3>
+                <p>Minimalismo, elegancia y calidad internacional.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <a href="#" onclick="app.navigateTo('catalog')">Catálogo</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+            </div>
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PolakoShop. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL: DETALLE DE PRODUCTO (USUARIO) -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content product-modal-content">
+            <button class="modal-close" onclick="app.closeModal('product-modal')"><i class='bx bx-x'></i></button>
+            <div class="pm-layout">
+                <div class="pm-image">
+                    <img id="pm-img" src="" alt="Producto">
+                </div>
+                <div class="pm-info">
+                    <span id="pm-category" class="pm-badge">Categoría</span>
+                    <h2 id="pm-name">Nombre del Producto</h2>
+                    <h3 id="pm-price">$0.00</h3>
+                    <p id="pm-desc">Descripción detallada del producto.</p>
+                    <p class="pm-stock">Stock disponible: <span id="pm-stock">0</span></p>
+                    <div class="pm-actions">
+                        <button class="btn btn-primary w-100" id="pm-buy-btn">Comprar Ahora</button>
+                        <button class="btn btn-outline w-100" id="pm-add-cart-btn"><i class='bx bx-cart-add'></i> Agregar al Carrito</button>
+                        <div class="pm-row-actions">
+                            <button class="btn btn-icon" id="pm-fav-btn"><i class='bx bx-heart'></i></button>
+                            <button class="btn btn-icon" id="pm-share-btn"><i class='bx bx-share-alt'></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CREAR/EDITAR PRODUCTO (ADMIN) -->
+    <div id="admin-product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="app.closeModal('admin-product-modal')"><i class='bx bx-x'></i></button>
+            <h2 id="admin-modal-title">Agregar Producto</h2>
+            <form id="admin-product-form">
+                <input type="hidden" id="ap-id">
+                <div class="input-group">
+                    <label>Nombre del Producto</label>
+                    <input type="text" id="ap-name" required>
+                </div>
+                <div class="input-group">
+                    <label>URL de la Imagen</label>
+                    <input type="url" id="ap-img" required placeholder="https://...">
+                </div>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Precio ($)</label>
+                        <input type="number" id="ap-price" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Stock</label>
+                        <input type="number" id="ap-stock" required>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Categoría</label>
+                        <select id="ap-category" required>
+                            <option value="Polos">Polos</option>
+                            <option value="Camisetas">Camisetas</option>
+                            <option value="Chompas">Chompas</option>
+                            <option value="Casacas">Casacas</option>
+                            <option value="Poleras">Poleras</option>
+                            <option value="Pantalones">Pantalones</option>
+                            <option value="Jeans">Jeans</option>
+                            <option value="Joggers">Joggers</option>
+                            <option value="Shorts">Shorts</option>
+                            <option value="Ropa deportiva">Ropa deportiva</option>
+                            <option value="Medias">Medias</option>
+                            <option value="Calzoncillos">Calzoncillos</option>
+                            <option value="Boxers">Boxers</option>
+                            <option value="Zapatos">Zapatos</option>
+                            <option value="Zapatillas">Zapatillas</option>
+                            <option value="Sandalias">Sandalias</option>
+                            <option value="Gorras">Gorras</option>
+                            <option value="Mochilas">Mochilas</option>
+                            <option value="Accesorios">Accesorios</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Marca</label>
+                        <input type="text" id="ap-brand" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Descripción</label>
+                    <textarea id="ap-desc" rows="3" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Estado</label>
+                    <select id="ap-status">
+                        <option value="active">Activo</option>
+                        <option value="draft">Borrador</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts (Se cargan como módulo para usar Firebase Web SDK V10) -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
