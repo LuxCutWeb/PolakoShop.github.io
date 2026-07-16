@@ -56,7 +56,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ID del administrador maestro (se almacena como campo en Firestore o UID definido)
-const ADMIN_EMAIL = "admin@polakoshop.com";
+const ADMIN_EMAIL = "jeremyalexandercubasomonte@gmail.com";
 /* ==========================================================================
    MÓDULO: AUTENTICACIÓN
    ========================================================================== */
