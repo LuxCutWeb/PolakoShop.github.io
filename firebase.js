@@ -30,8 +30,9 @@ import {
 
 // Configuración de Firebase - Reemplazar por tus credenciales de consola Firebase
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+
+//aca iba lo q borre de 2//
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -49,10 +50,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// 👇 ESTAS SON LAS DOS LÍNEAS NUEVAS QUE DEBES PONER 👇
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 // ID del administrador maestro (se almacena como campo en Firestore o UID definido)
 const ADMIN_EMAIL = "admin@polakoshop.com";
-
 /* ==========================================================================
    MÓDULO: AUTENTICACIÓN
    ========================================================================== */
