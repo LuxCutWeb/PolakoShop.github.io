@@ -628,7 +628,7 @@ class App {
             this.updateCartUI();
 
             // Abrir API de WhatsApp redireccionando al número maestro
-            window.open(`https://api.whatsapp.com/send?phone=51999999999&text=${encoded}`, "_blank");
+            window.open(`https://api.whatsapp.com/send?phone=51982277143&text=${encoded}`, "_blank");
             this.showToast("Pedido registrado. Redireccionando a WhatsApp...");
 
         } catch (err) {
