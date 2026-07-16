@@ -29,20 +29,27 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Configuración de Firebase - Reemplazar por tus credenciales de consola Firebase
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyD2lQU4sY2fhfN1A13PPJ1ZcrLILJw6II8",
+  authDomain: "polakoshop-9b3d9.firebaseapp.com",
+  projectId: "polakoshop-9b3d9",
+  storageBucket: "polakoshop-9b3d9.firebasestorage.app",
+  messagingSenderId: "702207897369",
+  appId: "1:702207897369:web:aa1eb14f81e3b749db9f88",
+  measurementId: "G-BEHS232718"
 };
 
-// Inicializar Aplicación de Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
+const analytics = getAnalytics(app);
 // ID del administrador maestro (se almacena como campo en Firestore o UID definido)
 const ADMIN_EMAIL = "admin@polakoshop.com";
 
