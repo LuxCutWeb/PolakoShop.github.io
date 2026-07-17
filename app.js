@@ -285,21 +285,76 @@ class App {
             });
         });
 
+        /* ==========================================================
+           NUEVO SISTEMA DE IMÁGENES: CONVERTIR FOTO A BASE64
+           ========================================================== */
+        const fileInput = document.getElementById('product-img-file');
+        const base64Input = document.getElementById('product-img-base64');
+
+        if (fileInput) {
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 600; // Achicamos la imagen para que Firebase la acepte
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > MAX_WIDTH) {
+                            height = height * (MAX_WIDTH / width);
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Convertimos a texto Base64 y lo guardamos en el input oculto
+                        const base64String = canvas.toDataURL('image/jpeg', 0.7);
+                        base64Input.value = base64String;
+                    };
+                };
+            });
+        }
+
         // Formulario de Agregar / Editar Producto
         document.getElementById("product-form").addEventListener("submit", async (e) => {
             e.preventDefault();
             const id = document.getElementById("form-product-id").value;
+            
+            // Obtenemos la imagen convertida
+            let imagenParaGuardar = document.getElementById("product-img-base64").value;
+
+            // Validación por si no se procesó la imagen correctamente
+            if (!imagenParaGuardar && !id) {
+                this.showToast("Por favor, selecciona una imagen para el producto.");
+                return;
+            }
+
             const pData = {
                 name: document.getElementById("product-name").value,
                 price: parseFloat(document.getElementById("product-price").value),
                 category: document.getElementById("product-category").value,
                 stock: parseInt(document.getElementById("product-stock").value),
-                imgUrl: document.getElementById("product-img-url").value,
+                imgUrl: imagenParaGuardar, // <--- AHORA GUARDAMOS EL TEXTO BASE64
                 desc: document.getElementById("product-desc").value
             };
 
             try {
                 if (id) {
+                    // Si estamos editando y no subió imagen nueva, evitamos borrar la que ya estaba
+                    if (!imagenParaGuardar) delete pData.imgUrl; 
                     await updateProductData(id, pData);
                     this.showToast("Producto actualizado en el almacén");
                 } else {
@@ -308,6 +363,11 @@ class App {
                 }
                 
                 this.resetProductForm();
+                
+                // Limpiamos también el input oculto y el de archivo
+                if(base64Input) base64Input.value = "";
+                if(fileInput) fileInput.value = "";
+
                 await this.loadProducts();
                 this.renderCatalog();
                 this.loadAdminView();
@@ -321,8 +381,9 @@ class App {
 
         document.getElementById("cancel-edit-btn").addEventListener("click", () => {
             this.resetProductForm();
+            if(base64Input) base64Input.value = "";
+            if(fileInput) fileInput.value = "";
         });
-    }
 
     /* ==========================================================================
        CONECTIVIDAD DE DATOS (PRODUCTOS & RENDERIZADO GENERAL)
