@@ -384,7 +384,7 @@ class App {
             if(base64Input) base64Input.value = "";
             if(fileInput) fileInput.value = "";
         });
-}
+    }
     /* ==========================================================================
        CONECTIVIDAD DE DATOS (PRODUCTOS & RENDERIZADO GENERAL)
        ========================================================================== */
