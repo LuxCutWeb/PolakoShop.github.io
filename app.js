@@ -425,7 +425,7 @@ class App {
     renderHome() {
         // Categorías Destacadas (Círculos Interactivos)
        
-        const homeCats = ["Polos", "oufits", "Hoodies", "Pantalones", "accesorios", "Gorras", "camisas", "mochilas" ];
+        const homeCats = ["Polos", "oufits", "Hoodies", "Pantalones", "accesorios", "Gorras", "camisas", "Ropa de niño" ];
         const catsGrid = document.getElementById("home-categories");
         catsGrid.innerHTML = "";
 
@@ -570,7 +570,7 @@ class App {
             "accesorios": "👑", 
             "Gorras": "🧢", 
             "camisas": "👔", 
-            "Mochilas": "🎒"
+            "Ropa de niño": "🎒"
         };
         return map[cat] || "🏷️";
     }
