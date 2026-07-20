@@ -423,7 +423,7 @@ class App {
 
     renderHome() {
         // Categorías Destacadas (Círculos Interactivos)
-        const homeCats = ["Polos", "oufits", "Hoodies", "Pantalones", "accesorios", "Gorras"];
+        const homeCats = ["Polos", "oufits", "Hoodies", "Pantalones", "accesorios", "Gorras", "camisas" ];
         const catsGrid = document.getElementById("home-categories");
         catsGrid.innerHTML = "";
 
@@ -561,8 +561,8 @@ class App {
 
     getCategoryEmoji(cat) {
         const map = {
-            "Polos": "👕", "oufits": "🧥", "Hoodies": "🧥", "Pantalones": "👖", 
-            "Pantalones": "👖", "accesorios": "👑", "Gorras": "🧢", "Mochilas": "🎒"
+            "Polos": "👕", "oufits": "👘", "Hoodies": "🧥", "Pantalones": "👖", 
+            "Pantalones": "👖", "accesorios": "👑", "Gorras": "🧢", "Mochilas": "🎒", "camisas": "👔"
         };
         return map[cat] || "🏷️";
     }
