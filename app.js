@@ -424,6 +424,7 @@ class App {
 
     renderHome() {
         // Categorías Destacadas (Círculos Interactivos)
+       
         const homeCats = ["Polos", "oufits", "Hoodies", "Pantalones", "accesorios", "Gorras", "camisas", "mochilas" ];
         const catsGrid = document.getElementById("home-categories");
         catsGrid.innerHTML = "";
