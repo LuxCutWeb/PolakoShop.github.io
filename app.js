@@ -562,8 +562,15 @@ class App {
 
     getCategoryEmoji(cat) {
         const map = {
-            "Polos": "👕", "oufits": "👘", "Hoodies": "🧥", "Pantalones": "👖", 
-            "Pantalones": "👖", "accesorios": "👑", "Gorras": "🧢", "camisas": "👔", "Mochilas": "🎒"};
+            "Polos": "👕", 
+            "oufits": "👘", 
+            "Hoodies": "🧥", 
+            "Pantalones": "👖", 
+            "accesorios": "👑", 
+            "Gorras": "🧢", 
+            "camisas": "👔", 
+            "Mochilas": "🎒"
+        };
         return map[cat] || "🏷️";
     }
 
